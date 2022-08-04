@@ -1,0 +1,64 @@
+body {
+    /*background-color: #3F3E42;*/
+    background-color: white;
+}
+.flex-container-row-small{
+    display: flex;
+    background-color: #3F3E42;
+    height: 30px;
+}
+.flex-container-row {
+    display: flex;
+    flex-direction: row;
+    margin: 0 0 0 15%;
+}
+
+.flex-container-left {
+    display: flex;
+    flex-direction: column;
+    /*background-color: #3F3E42;*/
+    background-color: #3FA037;
+    width: 120px;
+    justify-content: space-between;
+}
+.flex-container-left> div {
+    flex: 1;
+    /*background-color: #5f74df;*/
+    background-color: #f6faf6;
+    width: 100px;
+    margin: 10px 10px 10px 10px;
+    text-align: center;
+    line-height: 35px;
+    font-size: 14px;
+}
+
+.flex-container-center {
+    display: flex;
+    flex-direction: column;
+    /*background-color: #3F3E42;*/
+    background-color: #3FA037;
+    width: 980px;
+    justify-content: space-between;
+}
+.flex-container-center> div {
+    flex: 1;
+    /* background-color: #3FA037;*/
+    background-color: #f7faf7;
+    width: 950px;
+    margin: 10px 10px 10px 10px;
+    text-align: center;
+    line-height: 35px;
+    font-size: 14px;
+    justify-content: space-between;
+}
+.top-banner-small{
+    margin: 4px 4px 4px 4px;
+}
+.top-banner-small > div{
+    background-color: #3F3E42;
+    font-display: white;
+}
+.top-banner-small > div > label{
+    font-size: 18px;
+    color: white;
+}
