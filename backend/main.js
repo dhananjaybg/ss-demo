@@ -319,8 +319,12 @@ server.get("/loadtable", async (request, response) =>{
 
 server.get("/ui_settings", async (request, response) =>{
 
+  let settings  = `${request.query['ui-comp']}`; 
+  settings = 'table_head';
+  let full_path = "ui_settings."+ settings;
+
   try {
-    const table_head  = config.get('ui_settings.table_head');
+    const table_head  = config.get(full_path);
     console.log(table_head);
     response.send(table_head);
   } catch(e){
