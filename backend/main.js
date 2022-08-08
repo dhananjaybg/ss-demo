@@ -12,7 +12,6 @@ const morgan = require('morgan');
 //const { combine, timestamp, json } = winston.format;
 const { combine, timestamp, printf, colorize, align } = winston.format;
 
-//winston.format.json(), 
 const logger = winston.createLogger({
     level: 'info',
     format: combine(
@@ -31,7 +30,7 @@ logger.error('Error message');
 logger.warn('Warning message');
 
 
-const SRV  = process.env.ATLAS_SRV;;//config.get('atlas.srv');
+const SRV  = process.env.ATLAS_SRV;
 const client = new  MongoClient(SRV);
 
 const server = Express();
