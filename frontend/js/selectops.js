@@ -17,9 +17,10 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 
 $( document ).ready(function() {
+    
 
+    loadtablehead();
     //run Database Search and Facet 1st time
     loadtable();
-        
 });
             

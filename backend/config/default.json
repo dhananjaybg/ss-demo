@@ -1,0 +1,12 @@
+{
+    "facet":{
+        "facet1":{
+            "field":""
+        }
+    },
+    "ui_settings":{
+        "table_head" : [ "CHK","Flag","Check id","check Name","Bussiness Date","Check Run Date","Status","Exceptions","Comment"]
+    }
+    
+
+}

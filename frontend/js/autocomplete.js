@@ -45,7 +45,6 @@ $(document).ready(function () {
 
     $("#lookup_text").autocomplete({
         source: async function(request, response) {
-            console.log("Dhananjay- INN the event..");
             let field =  document.getElementById("lookup_select").value;
             let qfield = "tags."+field;
             if (qfield == "tags.all"){
@@ -72,18 +71,15 @@ $(document).ready(function () {
             let data = await fetch(`http://localhost:3000/query_tags`)
                 .then(results => results.json())
                 .then(results => results.map(result => { 
-                    //alert(JSON.stringify(result));
+                    //console.log(JSON.stringify(result));
                     return result;
                 }));
                 response(data);
         },
         minLength: 2
     });
-
     
-
-    
-      $( "#lookup_select" ).autocomplete({
-        source: availableTags
-      });
+    $( "#lookup_select" ).autocomplete({
+    source: availableTags
+    });
 });

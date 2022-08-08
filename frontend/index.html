@@ -15,10 +15,6 @@
         <link rel="stylesheet" href="css/modal.css">
         <link rel="stylesheet" href="css/layout.css">
         <script src="js/autocomplete.js"></script>
-        <!--
-        <link rel="stylesheet" href="css/autocomplete.css">
-        <script src="js/lk-autocomplete.js"></script>
-        -->
 
     </head>
     <body>
@@ -38,31 +34,16 @@
         </div>
         <div class="flex-container-row">
             <div class= "flex-container-left"> 
-                <div id="facet1">
+                <div id="facetx">
                     <H4> Filter Facets </H4>
+                    <div id="facet1"></div>
                 </div>
                 <div><H3>...</H3></div>
             </div>
             <div class= "flex-container-center">
               
                 <div>
-                    <!--div class="autocomplete" style="width:300px;">
-                        <input id="myInput" type="text" name="myCountry" placeholder="Country">
-                    </div-->
                     <input id="lookup_select" type="text"/>
-                    <!--br>
-                    <select id="lookup_select" type="text">
-                        <option value="regulatory">Regulatory</option>
-                        <option value="sub_domain">sub_domain</option>
-                        <option value="data_source">data_source</option>
-                        <option value="business_process">business_process</option>
-                        <option value="BCBS">BCBS</option>
-                        <option value="business_line">business_line</option>
-                        <option value="domain">domain</option>
-                        <option value="region">region</option>
-                        <option value="data_control">data_control</option>
-                        <option value="all">all tags</option>
-                    </select-->
                     <input id="lookup_text" type="text"/>
                     <input type="date" id="range_start" name="range_start">
                     <input type="date" id="range_end" name="range_end">
@@ -74,48 +55,20 @@
             
                 <div id="output"> 
                     <table id="table_out" class="display" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>CHK</th>
-                                <th>Flag</th>
-                                <th>Check id</th>
-                                <th>check Name</th>
-                                <th>Bussiness Date</th>
-                                <th>Check Run Date</th>
-                                <th>Status</th>
-                                <th>Exceptions</th>
-                                <th>Comment</th>
-                            </tr>
-                        </thead>
                         <tbody id="tbody_rows">
                         </tbody>
                     </table>   
                 </div>
                 <div>
-                    <!--
-https://charts.mongodb.com/charts-statestreet-tjygl/public/dashboards/62d5c22a-32ba-4893-8f4f-1d25de205c6a
-                    -->
-                    
                 </div>
-                
-               
             </div>
             
         </div>
         <div id="dashboard"></div>
 
-        
-
         <script src="js/apicalls.js"></script>
         <script src="js/selectops.js"></script>
         <script src="js/modal.js"></script>
         
-        
-        <!--iframe style="border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);"
-        width="640" 
-        height="480" 
-        src="https://charts.mongodb.com/charts-statestreet-tjygl/public/dashboards/62d5c22a-32ba-4893-8f4f-1d25de205c6a&autoRefresh=true&maxDataAge=30">
-        </iframe-->
-
     </body>
 </html>

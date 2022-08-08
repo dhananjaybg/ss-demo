@@ -1,24 +1,5 @@
-const opendoc = async () =>{
-    
-    let bx_majdesc = document.getElementById("BX-MAJDESC");
-    let output = document.getElementById("doc_text")
-    output.innerHTML = "";
-
-    try
-    {
-        let result = await fetch("http://localhost:3000/get?doc_id=628d2f04238357006cb2334a")
-            .then(response => response.json());
-        console.log(result);
-        result.forEach(chat => {
-            let messageContainer = document.createElement("p");
-            messageContainer.innerHTML = `${chat.value}`
-            output.appendChild(messageContainer);
-        });
-    }catch(e){
-        console.error(e);
-    }
-
-};
+//const array_head = [ "CHK","Flag","Check id","check Name","Bussiness Date","Check Run Date","Status","Exceptions","Comment"];
+let thead_row = document.createElement("tr");
 
 const dbsearchfacet = async ( facet_term ) =>{
     let bx_majdesc = document.getElementById("BX-MAJDESC");
@@ -45,90 +26,6 @@ const dbsearchfacet = async ( facet_term ) =>{
     }
 
 };
-
-const search_desc_XXX = async ( valx ) =>{
-    //alert("search_desc");
-    let loc_term = document.getElementById("lk-location");
-    let cs_term = document.getElementById("lk-customer");
-    let bx_plusid = document.getElementById("BX-PLUSID");
-    let bx_majdesc = document.getElementById("BX-MAJDESC");
-    let rn_reccode = document.getElementById("RN-RECCODE");
-    let barcode = document.getElementById("barcode");
-    //buildstring
-    params  =  "location="+loc_term.value;
-    params += "&CS-ID="+cs_term.value;
-    params += "&bx_plusid="+bx_plusid.value;
-    params += "&bx_majdesc="+bx_majdesc.value;
-    params += "&rn_reccode="+rn_reccode.value;
-    params += "&barcode="+barcode.value;
-    console.log(params);
-
-    let cust_id = document.getElementById("lk-customer");
-    let desc_term = document.getElementById("BX-MAJDESC");
-    let path_var = "BX-MAJDESC";
-
-    let output = document.getElementById("tbody_rows");
-    output.innerHTML = "";
-
-    try{
-        dbsearchfacet(desc_term.value);
-    }catch(e){
-        console.error(e);
-    }
-
-
-    try
-    {
-        //let result = await fetch("http://localhost:3000/search_cpd?cust_id="+cust_id.value+"&desc_term="+desc_term.value+"&path_var="+path_var)
-        let result = await fetch("http://localhost:3000/search_cpd?"+params)
-            .then(response => response.json());
-        
-        
-        result.forEach(chat => {
-            
-            
-            chat.highlights.forEach(highlights =>{
-                let texts = highlights.texts;
-
-                let replacements = texts.map(text =>{
-                    if (text.type == "hit"){
-                        return `<mark>${text.value}</mark>`
-                    } else {
-                        return text.value;
-                    }
-                }).join("");
-                    
-                let originals = texts.map(text =>{
-                    return text.value;
-                }).join("");
-
-                console.log(chat)
-                console.log("=====>"+originals);
-                console.log("=====>"+replacements);  
-                
-                chat['BX-MAJDESC'] = chat['BX-MAJDESC'].replace(originals, replacements);
-
-                let tab_row = document.createElement("tr");
-                tab_row.innerHTML += `<td id='${chat._id}' onclick=pop_doc('${chat._id}')><a>${chat['CS-ID']}</a></td>`
-                tab_row.innerHTML += `<td> ${chat['LC-ID']}</td>`
-                tab_row.innerHTML += `<td> ${chat['BX-PLUSID']}</td>`
-                tab_row.innerHTML += `<td> ${chat['RN-RECCODE']}</td>`
-                tab_row.innerHTML += `<td> ${chat['BX-MAJDESC']}</td>`
-                tab_row.innerHTML += `<td> ${chat['BX-MINDESC']}</td>`
-                tab_row.innerHTML += `<td> ${chat['BX-DESTDATE']}</td>`
-                tab_row.innerHTML += `<td><button type="button" onclick="fetch_loc('${chat['LC-ID']}')" id="myBtn">Get Location</button></td>`
-                
-                output.appendChild(tab_row);
-            });
-            
-            
-        });
-
-    }catch(e){
-        console.error(e);
-    }
-};
-
 
 const display_criteria = async () =>{
     let v1 = document.createElement("span")
@@ -167,6 +64,30 @@ const search_simple = async () =>{
         console.error(e);
     }
 
+};
+
+function myFunction(item, index) {
+    let th = document.createElement("th");
+    th.innerHTML= item;
+    thead_row.append(th);
+};
+
+const loadtablehead = async ( val ) =>{
+    
+    try
+    {
+        let result = await fetch("http://localhost:3000/ui_settings?")
+            .then(response => response.json());
+            let thead = document.createElement("thead");
+            //array_head.forEach(myFunction);
+            result.forEach(myFunction);
+            thead.append(thead_row);
+            document.getElementById("table_out").append(thead);
+    }catch(e){
+        console.error(e);
+    }
+
+    
 };
 
 const loadtable = async ( val ) =>{

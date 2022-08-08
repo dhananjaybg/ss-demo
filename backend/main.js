@@ -2,14 +2,27 @@ const { MongoClient, ObjectId } = require("mongodb");
 const Express = require("express");
 
 const config = require('config');
+const env_config = require('dotenv').config();
+
 const Cors = require("cors");
 const BodyParser = require("body-parser");
 const winston = require('winston');
 const morgan = require('morgan');
 
+//const { combine, timestamp, json } = winston.format;
+const { combine, timestamp, printf, colorize, align } = winston.format;
+
+//winston.format.json(), 
 const logger = winston.createLogger({
     level: 'info',
-    format: winston.format.json(),
+    format: combine(
+      colorize({ all: true }),
+      timestamp({
+        format: 'YYYY-MM-DD hh:mm:ss.SSS A',
+      }),
+      align(),
+      printf((info) => `[${info.timestamp}] ${info.level}: ${info.message}`)
+    ),
     transports: [new winston.transports.Console()],
   });
 
@@ -17,11 +30,13 @@ logger.info('Info message');
 logger.error('Error message');
 logger.warn('Warning message');
 
-const SRV  = config.get('atlas.srv');
+
+const SRV  = process.env.ATLAS_SRV;;//config.get('atlas.srv');
 const client = new  MongoClient(SRV);
 
 const server = Express();
-server.use(morgan('combined'))
+//server.use(morgan('combined'))
+server.use(morgan('tiny'))
 
 server.use(Cors());
 
@@ -31,21 +46,22 @@ var loc_collection;
 //project stays same because of table
 const options = {}; 
 const project = {};
-project['_id']= 1,
-project['source_control_id']= 1,
-project['control_name']= 1,
-project['asat']= 1,
-project['timestamp']= 1,
-project['control_run_status']= 1,
-project['number_of_control_exceptions']= 1
 
-options['projection'] = project;
+function build_project_stage(){
+    project['_id']= 1,
+    project['source_control_id']= 1,
+    project['control_name']= 1,
+    project['asat']= 1,
+    project['timestamp']= 1,
+    project['control_run_status']= 1,
+    project['number_of_control_exceptions']= 1
 
-const tags_path = [ 'tags.regulatory','tags.sub_domain','tags.business_process','tags.BCBS','tags.business_line','tags.domain','tags.region','tags.data_control'];
+    options['projection'] = project;
+};
+
 
 
 server.get("/getdoc", async (request, response) => {
-  console.log("somethign something");
   const doc_id = `${request.query.docid}`;
   console.log(doc_id);
   try {
@@ -54,7 +70,8 @@ server.get("/getdoc", async (request, response) => {
       let result = await collection.findOne(query,{});
       response.send(result);
   } catch (e) {
-      response.status(500).send({ message: e.message });
+    logger.warn(e.message);
+    response.status(500).send({ message: e.message });
   }
 });
 
@@ -110,6 +127,7 @@ server.get("/autocomplete", async (request, response) =>{
     response.send(results_gen);
 
   }catch(e){
+    logger.warn(e.message);
     console.error(e);
   }
 
@@ -291,8 +309,8 @@ server.get("/loadtable", async (request, response) =>{
     console.log("options ==> " + options);
 
     try {
-      let results_gen = await collection.find(query,options).limit(25).toArray();
-      //console.log(results_gen)
+      
+      let results_gen = await collection.find(query,options).limit(100).toArray();
       response.send(results_gen);
     }catch(e){
       console.error(e);
@@ -300,17 +318,37 @@ server.get("/loadtable", async (request, response) =>{
 
 });
 
+server.get("/ui_settings", async (request, response) =>{
+
+  try {
+    const table_head  = config.get('ui_settings.table_head');
+    console.log(table_head);
+    response.send(table_head);
+  } catch(e){
+    console.error(e);
+  }
+
+});
+
+
 server.listen("3000", async () =>{
     try {
-        const DB  = config.get('atlas.database');
-        const COLL  = config.get('atlas.collection');
+        const DB  = process.env.DB;//config.get('atlas.database');
+        const COLL  =  process.env.COLLECTION ;//config.get('atlas.collection');
+        const TAGS_COLL  =  process.env.TAGS_COLLECTION ;
+
         console.log(DB);
         console.log(COLL);
         await client.connect();
         collection = client.db(DB).collection(COLL);
 
-        tags_collection = client.db(DB).collection("tags");
+        tags_collection = client.db(DB).collection(TAGS_COLL);
         //console.log(collection);
+        //get your 1 time setup 
+        build_project_stage();
+
+        let var_var = process.env.ATLAS_SRV;
+        
         
     } catch (e){
         console.error(e);

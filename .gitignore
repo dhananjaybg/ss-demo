@@ -1,7 +1,7 @@
 backend/main.js.BCK
 backend/package-lock.json
 backend/test.js
-backend/config/default.json
+backend/.env
 backend/node_modules/
 frontend/node_modules/
 frontend/scratch/
