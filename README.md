@@ -1,16 +1,15 @@
 # ss-demo
 
 This is a basic node js app / demo for Atlas Search.
+# Setup
+- Setup MongoDB database cluster
+-  Copy the SRV string from the Atlas Cluster 
+-  Setup Atlas Search Indexes 
+- Setup NodeJS dev on your laptop 
+-  copy the SRV string 
 
-## Setup MongoDB database cluster
-### Copy the SRV string from the Atlas Cluster 
-### Setup Atlas Search Indexes 
 
-##  Setup NodeJS dev on your laptop 
-### copy the SRV string 
-
-
-## .ENV file
+# .ENV file
 
 - ATLAS_SRV="mongodb+srv://user:pass@mongodb_server.mongodb.net/?retryWrites=true&w=majority"
 - DB="<<database_name>>"
