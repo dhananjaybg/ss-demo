@@ -12,10 +12,10 @@ This is a basic node js app / demo for Atlas Search.
 
 ## .ENV file
 
-### ATLAS_SRV="mongodb+srv://user:pass@mongodb_server.mongodb.net/?retryWrites=true&w=majority"
-### DB="<<database_name>>"
-### COLLECTION="<<collection_name>>"
-### RECORD_DISPLAY_COUNT=25
+-- ATLAS_SRV="mongodb+srv://user:pass@mongodb_server.mongodb.net/?retryWrites=true&w=majority"
+-- DB="<<database_name>>"
+-- COLLECTION="<<collection_name>>"
+-- RECORD_DISPLAY_COUNT=25
 
 ## .config/default.json
 ### sample UI config files
