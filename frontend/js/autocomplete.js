@@ -1,37 +1,12 @@
 //import ChartsEmbedSDK from '@mongodb-js/charts-embed-dom';
+//notused 
 
-var availableTags = [
-        "regulatory",
-        "sub_domain",
-        "data_source",
-        "BCBS",
-        "business_process",
-        "business_line",
-        "domain",
-        "region",
-        "data_control",
-        "all"
-      ];
 let tags = [];
-/*
+
+const PARENT_FIELD = "";
+
 $(window).load(function(){
-    //alert("window load");
-    try
-    {
-        let resultcc = fetch("http://localhost:3000/query_tags")
-            .then(response => response.json())
-            .then(results => results.map(result => { 
-                alert(JSON.stringify(result['keys']));
-                tags = result['keys'];
-            }));
-
-    }catch(e){
-        
-        console.error(e);
-    }
-
 });
-*/
 
 $(document).ready(function () { 
 
@@ -42,12 +17,11 @@ $(document).ready(function () {
 
     });
     
-
     $("#lookup_text").autocomplete({
         source: async function(request, response) {
             let field =  document.getElementById("lookup_select").value;
-            let qfield = "tags."+field;
-            if (qfield == "tags.all"){
+            let qfield = PARENT_FIELD + field;
+            if (qfield == PARENT_FIELD + "all"){
                 return false;
             }
 
@@ -59,7 +33,7 @@ $(document).ready(function () {
                     ret_val['value'] = result['_id'];
                     return ret_val;
                 }));
-            //console.log("**** autocomplete console-log-client"+data)
+            console.log("**** autocomplete console-log-client"+data)
             //alert(JSON.stringify(data));
             response(data);
         },
@@ -68,10 +42,10 @@ $(document).ready(function () {
 
     $( "#lookup_select" ).autocomplete({
         source: async function(request, response) {
-            let data = await fetch(`http://localhost:3000/query_tags`)
+            let data = await fetch(`http://localhost:3000/ui_settings?ui-comp=search_fields`)
                 .then(results => results.json())
                 .then(results => results.map(result => { 
-                    //console.log(JSON.stringify(result));
+                    console.log("#lookup_select ==> "+ JSON.stringify(result));
                     return result;
                 }));
                 response(data);
@@ -79,7 +53,7 @@ $(document).ready(function () {
         minLength: 2
     });
     
-    $( "#lookup_select" ).autocomplete({
-    source: availableTags
-    });
+    //$( "#lookup_select" ).autocomplete({
+    //    source: availableTags
+    //});
 });

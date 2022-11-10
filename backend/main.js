@@ -44,7 +44,7 @@ var loc_collection;
 let options = {}; 
 let project = {};
 
-function build_project_stage(){
+function build_project_stage_2(){
     project['_id']= 1,
     project['source_control_id']= 1,
     project['control_name']= 1,
@@ -55,6 +55,17 @@ function build_project_stage(){
 
     options['projection'] = project;
 };
+
+function build_project_stage(){
+  let full_path = "ui_settings.table_head";
+  const table_head  = config.get(full_path);
+  table_head.forEach( item =>{
+      project[item] = 1;
+  });
+  options['projection'] = project;
+  console.log(JSON.stringify(options));
+};
+
 
 server.get("/fetchfacet",async (request, response) =>{
   console.log("/fetchfacet...");
@@ -74,6 +85,7 @@ server.get("/fetchfacet",async (request, response) =>{
     let str = "new Date('01 Jan "+i+"')"; 
     boundaries.push(str);
   }
+
   console.log(">>>>>> "+JSON.stringify(boundaries));
 
   const facetpipe = [
@@ -91,7 +103,6 @@ server.get("/fetchfacet",async (request, response) =>{
               'type': 'date', 
               'path': 'asat', 
               'boundaries': [
-                new Date('01 Jan 2019'),
                 new Date('01 Jan 2020'),
                 new Date('01 Jan 2021'),
                 new Date('01 Jan 2022'),
@@ -105,16 +116,13 @@ server.get("/fetchfacet",async (request, response) =>{
     }
   ];
 
-
-  facetpipe[0]['$searchMeta']['facet']['facets']['dateFacet']['boundaries'] = boundaries;
-
+  facetpipe[0]['$searchMeta']['facet']['facets']['dateFacet']['boundaries'].length = 0;
+  let buckets =  config.get("facet.inital_year_bucket.value");
+  buckets.forEach(item => {
+    facetpipe[0]['$searchMeta']['facet']['facets']['dateFacet']['boundaries'].push( new Date(item));
+  });
+  
   console.log(">>>>>> "+JSON.stringify(facetpipe));
-
-
-  //facetpipe[0]['$searchMeta']['facet']['facets']['dateFacet']['boundaries'] = JSON.stringify(boundaries);
-  //facetpipe[0]['$searchMeta']['facet']['facets']['dateFacet']['name'] = "Dhananjay";
-  //console.log(JSON.stringify(facetpipe));
-
     try {
 
         //const profiler = logger.startTimer();
@@ -190,7 +198,7 @@ server.get("/autocomplete", async (request, response) =>{
   aggpipe.push(limit_stage);
   aggpipe.push(project_stage);
   aggpipe.push(group_stage);
-  //console.log("Aggpipe ==> " + JSON.stringify(aggpipe));
+  console.log("Aggpipe ==> " + JSON.stringify(aggpipe));
 
   try {
     let results_gen = await collection.aggregate(aggpipe).toArray();
@@ -355,9 +363,10 @@ server.get("/query_tags", async (request, response) =>{
   //,{_id:0,'keys':1}
 
   try {
-    let results_gen = await tags_collection.find(query,options).toArray();
+    //let results_gen = await tags_collection.find(query,options).toArray();
     //console.log(results_gen)
-    let results = results_gen[0].keys;
+    //let results = results_gen[0].keys;
+    let search_fields = 
     response.send(results_gen);
 
   }catch(e){
@@ -367,16 +376,15 @@ server.get("/query_tags", async (request, response) =>{
 });
 
 server.get("/loadtable", async (request, response) =>{
-  console.log("/loadtable.....starrt");
+    console.log("/loadtable....");
     const query = {}; 
     //console.log("query ==> " + query);
     //console.log("options ==> " + options);
 
     try {
-      console.log("/loadtabless.....starrt_IN");
-      
-      let results_gen = await collection.find(query,options).limit(25).toArray();
-      console.log("RESULTS",JSON.stringify(results_gen));
+      const display_count = process.env.RECORD_DISPLAY_COUNT;
+      let results_gen = await collection.find(query,options).limit(parseInt(display_count)).toArray();
+      //console.log("RESULTS",JSON.stringify(results_gen));
       response.send(results_gen);
     }catch(e){
       console.error(e);
@@ -391,9 +399,9 @@ server.get("/ui_settings", async (request, response) =>{
   let full_path = "ui_settings"+"."+settings;
 
   try {
-    const table_head  = config.get(full_path);
-    //console.log(table_head);
-    response.send(table_head);
+    const fetch_info  = config.get(full_path);
+    console.log(JSON.stringify(fetch_info));
+    response.send(fetch_info);
   } catch(e){
     console.error(e);
   }
@@ -415,12 +423,12 @@ server.listen("3000", async () =>{
         //databasesList = await client.db().admin().listDatabases();
         //databasesList.databases.forEach(db => console.log(` - ${db.name}`));
         
-        collection = client.db("NG").collection("Customers");
+        collection = client.db(DB).collection(COLL);
   
         //tags_collection = client.db(DB).collection(TAGS_COLL);
         //console.log(collection);
         //get your 1 time setup 
-        //build_project_stage();
+        build_project_stage();
     
     } catch (e){
         console.error(e);

@@ -1,13 +1,13 @@
 //const array_head = [ "CHK","Flag","Check id","check Name","Bussiness Date","Check Run Date","Status","Exceptions","Comment"];
 let thead_row = document.createElement("tr");
 const table_field_array = [];
+const THEAD3 = [];
 
 
 const apply_facet = async ( facet_term ) =>{
     alert(facet_term);
     //search_desc(facet_term);
 };
-
 
 const dbsearchfacet = async ( facet_term ) =>{
     let lookup_select = document.getElementById("lookup_select");
@@ -27,7 +27,7 @@ const dbsearchfacet = async ( facet_term ) =>{
     {
         let result = await fetch("http://localhost:3000/fetchfacet?"+params)
             .then(response => response.json());
-        console.log(result);
+        //console.log(result);
         //alert(result);
         result.forEach(chat => {
             let facetlink = document.createElement("dl");
@@ -56,7 +56,7 @@ const display_criteria = async () =>{
 
 const search_simple = async ( f_start, f_end) =>{
     let  field =  document.getElementById("lookup_select").value;
-    let qfield = "tags."+field;
+    let qfield = PARENT_FIELD + field;
     let  fvalue =  document.getElementById("lookup_text").value;
 
     params  =  "field="+qfield;
@@ -101,7 +101,7 @@ function myFunction(item, index) {
     th.innerHTML= item;
     thead_row.append(th);
 };
-const THEAD3 = [];
+
 const loadtablehead = async ( val ) =>{
     //val = "table_head";
     try
@@ -125,7 +125,7 @@ const loadtable = async ( val ) =>{
     {
         let result = await fetch("http://localhost:3000/loadtable?")
             .then(response => response.json());
-        console.log(result);
+        //console.log(result);
         render_table(result);
      
     }catch(e){
@@ -142,33 +142,27 @@ const render_table = async ( result ) =>{
     try
     {
         console.log("Rendering Table for");
-        console.log(result);
+        //console.log(result);
         //alert(JSON.stringify(result));
         result.forEach(chat => {
             let tab_row = document.createElement("tr");
             tab_row.innerHTML += `<td> <input id=${chat['_id']}  type='checkbox' /></td>`
             tab_row.innerHTML += `<td> <img src="icons/red-flag.png" height=25px/></td>`
-            /*
-            tab_row.innerHTML += `<td> ${chat['source_control_id']}</td>`
-            tab_row.innerHTML += `<td> ${chat['control_name']}</td>`
-            tab_row.innerHTML += `<td> ${chat['asat']}</td>`
-            tab_row.innerHTML += `<td> ${chat['timestamp']}</td>`
-            tab_row.innerHTML += `<td> ${chat['control_run_status']}</td>`
-            tab_row.innerHTML += `<td onclick='pop_doc(\"${chat['_id']}\",\"exceptions\")'> ${chat['number_of_control_exceptions']}</td>`
-            */
-            //tab_row.innerHTML += `<td> comment..123</td>`
-            table_field_array.forEach( elem =>{
-                let tab_row_field = document.createElement("td");
-                let valx = chat[elem];
-                if (valx){
-                    tab_row_field.innerHTML = valx ;
-                    tab_row.appendChild(tab_row_field);
-                }else{
+    
+                table_field_array.forEach( elem =>{
+                    let tab_row_field = document.createElement("td");
+                    //console.log(elem);
+                    let valx = chat[elem];
+               
 
+                    if (valx){
+                        tab_row_field.innerHTML = valx ;
+                        tab_row.appendChild(tab_row_field);
+                    }else{
+
+                    }
                 }
-                
-                
-            }
+
             )
 
             output.appendChild(tab_row);
@@ -179,39 +173,35 @@ const render_table = async ( result ) =>{
     }
 
 };
-
-
-
-
 //$('#lk-location').on('ready', function (event) {
-    var getUrlParameter = function getUrlParameter(sParam) {
-        var sPageURL = window.location.search.substring(1),
-            sURLVariables = sPageURL.split('&'),
-            sParameterName,
-            i;
-    
-        for (i = 0; i < sURLVariables.length; i++) {
-            sParameterName = sURLVariables[i].split('=');
-    
-            if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-            }
-        }
-    };
-    
-    $( document ).ready(function() {
-        //fecth table_head data from server
-        loadtablehead("table_head");
-        //run Database Search and Facet 1st time
-        loadtable();
-        //alert("loading table complete");
-        
-    });
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
 
-    $(window).on("load", function() {
-        //this event is fired after document ready
-        //alert("Widow load fires after loading table!!");
-        //$('#table_out').DataTable();
-    });
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+};
+
+$( document ).ready(function() {
+    //fecth table_head data from server
+    loadtablehead("table_head");
+    //run Database Search and Facet 1st time
+    loadtable();
+    //alert("loading table complete");
+    
+});
+
+$(window).on("load", function() {
+    //this event is fired after document ready
+    //alert("Widow load fires after loading table!!");
+    //$('#table_out').DataTable();
+});
 
                 
