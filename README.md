@@ -2,7 +2,7 @@
 
 This is a basic node js app / demo for Atlas Search.
 
-# Setup
+## setup
 - Setup MongoDB database cluster
 -  Copy the SRV string from the Atlas Cluster 
 -  Setup Atlas Search Indexes 
@@ -10,7 +10,7 @@ This is a basic node js app / demo for Atlas Search.
 -  copy the SRV string 
 
 
-# .ENV file
+## .ENV file
 
 - ATLAS_SRV="mongodb+srv://user:pass@mongodb_server.mongodb.net/?retryWrites=true&w=majority"
 - DB="<<database_name>>"
