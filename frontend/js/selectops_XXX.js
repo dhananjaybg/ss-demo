@@ -18,8 +18,8 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 $( document ).ready(function() {
     
-
-    loadtablehead();
+    //fecth table_head data from server
+    loadtablehead("table_head");
     //run Database Search and Facet 1st time
     loadtable();
 });

@@ -5,8 +5,15 @@
         }
     },
     "ui_settings":{
-        "table_head" : [ "CHK","Flag","Check id","check Name","Bussiness Date","Check Run Date","Status","Exceptions","Comment"]
+        "table_head" : ["check","Status","AccountNumber","name","status","regionalFuelType","BillDate","lastupdated"],
+        "project" : {
+            "_id":1,
+            "AccountNumber":1,
+            "name":1,
+            "status":1,
+            "regionalFuelType":1,
+            "BillDate":1,
+            "lastupdated":1
+        }
     }
-    
-
 }

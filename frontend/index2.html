@@ -6,12 +6,12 @@
         <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         
         <!--script src="https://code.jquery.com/jquery-3.5.1.js"></script-->
+        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
         
         <link rel="stylesheet" href="css/modal.css">
         <link rel="stylesheet" href="css/layout.css">
         <script src="js/autocomplete.js"></script>
-                        
-
 
     </head>
     <body>
@@ -25,7 +25,7 @@
         <div class="top-banner-small">
             <div> 
                 <img src="icons/mongo.png" width="3.3%" height="3.3%"/> 
-                <img src="img/national-grid-logo-small.png" width="20%" height="20%" /> 
+                <img src="img/ss-logo-small.png" width="20%" height="20%" /> 
                 <label>user logged :  main_user@login.com </label>
             </div>
         </div>
@@ -51,27 +51,36 @@
                     <br>
                 </div>
             
-                <div id="output"> 
+                <!--div id="output"--> 
                     <table id="table_out" class="display" style="width:100%">
-                        <tbody id="tbody_rows">
+                        <thead>
+                            <tr>
+                                <th>Column 1</th>
+                                <th>Column 2</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Row 1 Data 1</td>
+                                <td>Row 1 Data 2</td>
+                            </tr>
+                            <tr>
+                                <td>Row 2 Data 1</td>
+                                <td>Row 2 Data 2</td>
+                            </tr>
                         </tbody>
-                    </table>   
-                </div>
+                    </table>
+                <!--/div-->
                 <div>
                 </div>
             </div>
             
         </div>
         <div id="dashboard"></div>
-        
-        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-            
+
         <script src="js/apicalls.js"></script>
         <!--script src="js/selectops.js"></script-->
         <script src="js/modal.js"></script>
-
-         
         
     </body>
 </html>
