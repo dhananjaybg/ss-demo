@@ -1,6 +1,7 @@
 # ss-demo
 
 This is a basic node js app / demo for Atlas Search.
+
 # Setup
 - Setup MongoDB database cluster
 -  Copy the SRV string from the Atlas Cluster 
@@ -16,9 +17,9 @@ This is a basic node js app / demo for Atlas Search.
 - COLLECTION="<<collection_name>>"
 - RECORD_DISPLAY_COUNT=25
 
-## .config/default.json
-### sample UI config files
-### only change the values for search_fields, table_head,project,facets
+# .config/default.json
+- sample UI config files
+** only change the values for search_fields, table_head,project,facets
  "ui_settings":{
         "demo_opp": "State Street",
         "search_fields" : ["tags.regulatory","tags.sub_domain","tags.data_source","tags.BCBS","tags.business_process","tags.business_line","tags.domain","tags.region","tags.data_control","tags.all"],
