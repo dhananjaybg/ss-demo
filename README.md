@@ -21,7 +21,8 @@ This is a basic node js app / demo for Atlas Search.
 - sample UI config files
 - NOTE: only change the values for search_fields, table_head,project,facets
 - Sample starter file below
-  
+
+``` 
 "ui_settings":{
     "demo_opp": "State Street",
     "search_fields" : ["tags.regulatory","tags.sub_domain","tags.data_source"],
@@ -43,3 +44,4 @@ This is a basic node js app / demo for Atlas Search.
         }
     }
 }
+```
